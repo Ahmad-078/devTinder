@@ -11,6 +11,23 @@ const signUpValidation = (req) =>{
         throw new Error('Please enter a strong password!!');
     }
 }
+ const profileEditValidation = (req) => {
+    const editableFields = ['firstName', 'lastName', 'age', 'gender'];
+    const isEditable = Object.keys(req.body).every (field => editableFields.includes(field));
+     return isEditable;
+ }
+ const  passwordEditValidation = (req) => {
+     const {newPassword , oldPassword} = req.body;
+     if(!newPassword || !oldPassword){ 
+        throw new Error ('Please enter required fields!!'); 
+      }
+      if (!validator.isStrongPassword(newPassword)){
+        throw new Error('Please enter a strong password!!');
+    }
+    
+ }
  module.exports ={
-    signUpValidation
+    signUpValidation,
+    profileEditValidation,
+    passwordEditValidation
  }
