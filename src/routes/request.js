@@ -41,9 +41,9 @@ requestRouter.post('/request/send/:status/:toUserId', userAuth, async(req,res) =
     }
  })
   
- requestRouter.post('/request/review/:status/:requestId', userAuth, async(req,res) =>{
+ requestRouter.post('/request/review/:status/:requestedId', userAuth, async(req,res) =>{
     try {
-         const loggedInUserId = req.user._id;
+         const loggedInUser = req.user;
          const {status, requestedId} = req.params;
          const allowedStatus = ['accepted', 'rejected'];
          if(!allowedStatus.includes(status)){
@@ -53,7 +53,7 @@ requestRouter.post('/request/send/:status/:toUserId', userAuth, async(req,res) =
         const connectionRequest = await ConnectionRequestModel.findOne(
             {
                 _id:requestedId,
-                toUserId: loggedInUserId,
+                toUserId: loggedInUser._id,
                 status:'interested'
 
         })

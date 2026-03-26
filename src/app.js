@@ -6,13 +6,14 @@ const requestRouter = require('./routes/request');
 const profileRouter = require('./routes/profile');
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
+const userRouter = require('./routes/user');
 app.use(express.json());
 app.use(cookieParser());
 
  app.use("/",authRouter);
  app.use("/",requestRouter);
  app.use("/",profileRouter);   
-
+app.use('/',userRouter);
  
 
 
