@@ -6,14 +6,11 @@ const User = require('./models/user');
 //  app.use('/', (req,res)=>{
 //     res.send('Hello from server');
 // });
+ app.use(express.json());
 
 app.post('/signup', async (req,res)=>{
-    const user = new User({
-        firstName :"Ahmad",
-        lastName :"Sufiyan",
-        email :"ahmad@sufiyan.com",
-        password :"Ahmad@123"
-    })
+
+    const user = new User(req.body)
     try{
          await user.save();
          res.send("User added successfully");
@@ -21,6 +18,44 @@ app.post('/signup', async (req,res)=>{
         res.status(400).send("Error adding user :"+ error.message);
     }
 })
+ app.get('/user', async(req,res)=>{
+ const userEmail = req.body.email;
+  
+ try{
+    const user = await User.findOne({email:userEmail});
+    if(!user){
+         return res.status(404).send("User not found");
+    }
+    else{
+         res.send(user);
+    }
+ }
+ catch (error) {
+    res.status(400).send("Error fetching user :"+ error.message);
+ }})
+app.get('/feed', async(req,res) =>{
+    try{
+        const users = await User.find({});
+    if(users.length === 0){
+        return res.status(404).send("No users found");
+    }
+    res.send(users);
+    }
+    catch(error){
+        res.status(400).send("Something went wrong :"+ error.message);
+    }
+})
+ app.delete('/user', async(req, res)=>{
+    const userId = req.body.userId;
+    try{
+          await User.findByIdAndDelete({_id:userId});
+          res.send("User deleted successfully");
+    }
+    catch(error){
+        res.status(400).send("Something went wrong :"+ error.message);
+    }
+ })
+
 connectDB().then(()=>{
     console.log('Database connected successfully');
     app.listen(3000,()=>{
