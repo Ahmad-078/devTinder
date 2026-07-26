@@ -55,7 +55,25 @@ app.get('/feed', async(req,res) =>{
         res.status(400).send("Something went wrong :"+ error.message);
     }
  })
-
+ 
+ app.patch('/user/:userId' , async(req,res) =>{
+    const userId = req.params.userId;
+    const data = req.body;
+    
+    
+    try{
+    const validfields =['firstName','lastName', 'age', 'gender','photoUrl',"skills"];
+     const isValid = Object.keys(req.body).every((field)=> validfields.includes(field));
+     if(!isValid){
+          throw new Error("Invalid request body");
+     }
+    await User.findByIdAndUpdate(userId,data,{runValidators:true,returnDocument:'after' });
+         res.send("User updated successfully");
+    }
+    catch(error){
+        res.status(400).send("Something went wrong :"+ error.message);
+    }
+ })
 connectDB().then(()=>{
     console.log('Database connected successfully');
     app.listen(3000,()=>{
