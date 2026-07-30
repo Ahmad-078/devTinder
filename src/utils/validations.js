@@ -19,6 +19,10 @@ const signUpValidation = (req)=>{
     else if(!validator.isEmail(email)){
         throw new Error ('Email is invalid');
     }
-
  }
- module.exports = { signUpValidation, loginValidation };
+ const profileEditValidation = (req) =>{
+    const allowedEditFields = ['firstName','lastName','age','gender','photoUrl','skills'];
+    const isAllowedEdit = Object.keys(req.body).every(field => allowedEditFields.includes(field));
+    return isAllowedEdit;
+ }
+ module.exports = { signUpValidation, loginValidation, profileEditValidation };
