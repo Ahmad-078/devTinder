@@ -48,9 +48,14 @@ const userSchema = new mongoose.Schema({
     },
     photoUrl:{
         type:String,
+        default:'https://cdn-icons-png.flaticon.com/512/219/219988.png'
     },
     skills:{   
         type:[String], 
+    },
+    about:{
+        type:String,
+        default: "This is about me"
     }
 },{
     timestamps:true,

@@ -5,7 +5,7 @@ const User = require('../models/user');
 const ConnectionRequest = require('../models/connectionRequest');
 const { connect } = require('mongoose');
 
-requestRouter.post('/request/send/:status/:toUserId',userAuth,async(req,res)=>{
+requestRouter.post('/request/send/:status/:toUserId',userAuth,  async  (req,res)=>{
   try{
     const loggedInUser = req.user;
     const fromUserId = loggedInUser._id;
