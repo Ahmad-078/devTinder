@@ -66,7 +66,7 @@ requestRouter.post('/request/review/:status/:requestId',userAuth, async (req,res
         message: "Connection request not found"
        })
     }
-    connectionRequest.status = 'accepted'
+    connectionRequest.status = status
     const data = await connectionRequest.save();
     res.json({
       message: "connection reviewed succesfully",

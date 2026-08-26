@@ -3,7 +3,7 @@ const userRouter = express.Router();
 const {userAuth} = require('../middlewares/auth');
 const ConnectionRequest = require("../models/connectionRequest");
 const User = require('../models/user');
-const User_Safe_Data = "firstName lastName age skills gender"
+const User_Safe_Data = "firstName lastName age skills gender about photoUrl"
 
 userRouter.get('/user/request/received',userAuth,async (req,res)=>{
     try{
